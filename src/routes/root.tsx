@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Form,
   LoaderFunctionArgs,
@@ -24,6 +25,11 @@ export async function action() {
 export default function Root() {
   const { contacts, q } = useLoaderData() as {contacts: Contact[], q: string };
   const navigation = useNavigation();
+
+  useEffect(() => {
+    (document.getElementById("q") as HTMLInputElement).value = q;
+  }, [q]);
+
   return (
     <>
       <div id="sidebar">
