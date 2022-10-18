@@ -1,5 +1,6 @@
 import {
   Form,
+  LoaderFunctionArgs,
   NavLink,
   Outlet,
   redirect,
@@ -8,8 +9,10 @@ import {
 } from "react-router-dom";
 import { Contact, getContacts, createContact } from "../contact";
 
-export async function loader() {
-  const contacts = await getContacts();
+export async function loader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q")!;
+  const contacts = await getContacts(q);
   return { contacts };
 }
 
