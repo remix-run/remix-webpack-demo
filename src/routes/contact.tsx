@@ -1,4 +1,9 @@
-import { Form, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
+import {
+  Form,
+  LoaderFunctionArgs,
+  useFetcher,
+  useLoaderData,
+} from "react-router-dom";
 
 import { Contact as ContactT, getContact } from "../contact"
 
@@ -68,10 +73,11 @@ export default function Contact() {
 }
 
 function Favorite({ contact }: { contact: ContactT }) {
+  const fetcher = useFetcher();
   // yes, this is a `let` for later
   let favorite = contact.favorite;
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
@@ -83,6 +89,6 @@ function Favorite({ contact }: { contact: ContactT }) {
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
