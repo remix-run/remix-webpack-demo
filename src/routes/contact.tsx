@@ -1,14 +1,22 @@
 import {
+  ActionFunctionArgs,
   Form,
   LoaderFunctionArgs,
   useFetcher,
   useLoaderData,
 } from "react-router-dom";
 
-import { Contact as ContactT, getContact } from "../contact"
+import { Contact as ContactT, getContact, updateContact } from "../contact"
 
 export async function loader({ params }: LoaderFunctionArgs) {
   return getContact(params.contactId!);
+}
+
+export async function action({ request, params }: ActionFunctionArgs) {
+  let formData = await request.formData();
+  return updateContact(params.contactId!, {
+    favorite: formData.get("favorite") === "true",
+  });
 }
 
 export default function Contact() {
