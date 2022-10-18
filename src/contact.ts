@@ -2,11 +2,15 @@ import localforage from "localforage";
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 
-type Contact = {
+export type Contact = {
   id: string;
   createdAt: number;
   first?: string;
   last?: string;
+  favorite?: boolean;
+  avatar?: string;
+  twitter?: string;
+  notes?: string;
 };
 
 export async function getContacts(query?: string) {
