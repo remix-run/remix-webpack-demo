@@ -1,16 +1,13 @@
-import { Form } from "react-router-dom";
+import { Form, LoaderFunctionArgs, useLoaderData } from "react-router-dom";
 
-import type { Contact as ContactT } from "../contact"
+import { Contact as ContactT, getContact } from "../contact"
+
+export async function loader({ params }: LoaderFunctionArgs) {
+  return getContact(params.contactId!);
+}
 
 export default function Contact() {
-  const contact: Omit<ContactT, "id" | "createdAt"> = {
-    first: "Your",
-    last: "Name",
-    avatar: "https://placekitten.com/g/200/200",
-    twitter: "your_handle",
-    notes: "Some notes",
-    favorite: true,
-  };
+  const contact = useLoaderData() as ContactT;
 
   return (
     <div id="contact">
@@ -70,7 +67,7 @@ export default function Contact() {
   );
 }
 
-function Favorite({ contact }: { contact: Omit<ContactT, "id" | "createdAt">}) {
+function Favorite({ contact }: { contact: ContactT }) {
   // yes, this is a `let` for later
   let favorite = contact.favorite;
   return (
