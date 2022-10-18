@@ -13,7 +13,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const q = url.searchParams.get("q")!;
   const contacts = await getContacts(q);
-  return { contacts };
+  return { contacts, q };
 }
 
 export async function action() {
@@ -22,7 +22,7 @@ export async function action() {
 }
 
 export default function Root() {
-  const { contacts } = useLoaderData() as {contacts: Contact[]};
+  const { contacts, q } = useLoaderData() as {contacts: Contact[], q: string };
   const navigation = useNavigation();
   return (
     <>
@@ -36,6 +36,7 @@ export default function Root() {
               placeholder="Search"
               type="search"
               name="q"
+              defaultValue={q}
             />
             <div
               id="search-spinner"
