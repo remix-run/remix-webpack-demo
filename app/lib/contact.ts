@@ -1,6 +1,7 @@
-import localforage from "localforage";
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
+
+import { store } from "~/lib/store";
 
 export type Contact = {
   id: string;
@@ -15,7 +16,7 @@ export type Contact = {
 
 export async function getContacts(query?: string) {
   await fakeNetwork(`getContacts:${query}`);
-  let contacts = await localforage.getItem<Contact[]>("contacts");
+  let contacts = store.getItem<Contact[]>("contacts");
   if (!contacts) contacts = [];
   if (query) {
     contacts = matchSorter(contacts, query, { keys: ["first", "last"] });
@@ -35,14 +36,14 @@ export async function createContact() {
 
 export async function getContact(id: string) {
   await fakeNetwork(`contact:${id}`);
-  let contacts = (await localforage.getItem<Contact[]>("contacts"))!;
+  let contacts = store.getItem<Contact[]>("contacts")!;
   let contact = contacts.find((contact) => contact.id === id);
   return contact ?? null;
 }
 
 export async function updateContact(id: string, updates: Partial<Contact>) {
   await fakeNetwork();
-  let contacts = (await localforage.getItem<Contact[]>("contacts"))!;
+  let contacts = store.getItem<Contact[]>("contacts")!;
   let contact = contacts.find((contact) => contact.id === id);
   if (!contact) throw new Error(`No contact found for ${id}`);
   Object.assign(contact, updates);
@@ -51,7 +52,7 @@ export async function updateContact(id: string, updates: Partial<Contact>) {
 }
 
 export async function deleteContact(id: string) {
-  let contacts = (await localforage.getItem<Contact[]>("contacts"))!;
+  let contacts = store.getItem<Contact[]>("contacts")!;
   let index = contacts.findIndex((contact) => contact.id === id);
   if (index > -1) {
     contacts.splice(index, 1);
@@ -61,8 +62,8 @@ export async function deleteContact(id: string) {
   return false;
 }
 
-function set(contacts: Contact[]) {
-  return localforage.setItem("contacts", contacts);
+async function set(contacts: Contact[]) {
+  return store.setItem("contacts", contacts);
 }
 
 // fake a cache so we don't slow down stuff we've already seen
