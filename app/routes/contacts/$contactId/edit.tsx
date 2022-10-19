@@ -1,13 +1,24 @@
+import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node";
 import {
-  ActionFunctionArgs,
   Form,
-  redirect,
   useLoaderData,
   useNavigate,
-} from "react-router-dom";
-import { Contact, updateContact } from "../contact";
+} from "@remix-run/react";
 
-export async function action({ request, params }: ActionFunctionArgs) {
+import { getContact, updateContact } from "~/lib/contact";
+
+export async function loader({ params }: LoaderArgs) {
+  const contact = await getContact(params.contactId!);
+  if (!contact) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+  return contact;
+}
+
+export async function action({ request, params }: ActionArgs) {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
   await updateContact(params.contactId!, updates);
@@ -15,7 +26,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 
 export default function EditContact() {
-  const contact = useLoaderData() as Contact;
+  const contact = useLoaderData<typeof loader>();
   const navigate = useNavigate();
 
   return (

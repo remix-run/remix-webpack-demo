@@ -1,14 +1,13 @@
+import { ActionArgs, LoaderArgs } from "@remix-run/node";
 import {
-  ActionFunctionArgs,
   Form,
-  LoaderFunctionArgs,
   useFetcher,
   useLoaderData,
-} from "react-router-dom";
+} from "@remix-run/react";
 
-import { Contact as ContactT, getContact, updateContact } from "../contact"
+import { Contact as ContactT, getContact, updateContact } from "~/lib/contact"
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ params }: LoaderArgs) {
   const contact = await getContact(params.contactId!);
   if (!contact) {
     throw new Response("", {
@@ -19,7 +18,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return contact;
 }
 
-export async function action({ request, params }: ActionFunctionArgs) {
+export async function action({ request, params }: ActionArgs) {
   let formData = await request.formData();
   return updateContact(params.contactId!, {
     favorite: formData.get("favorite") === "true",
@@ -27,7 +26,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 
 export default function Contact() {
-  const contact = useLoaderData() as ContactT;
+  const contact = useLoaderData<typeof loader>();
 
   return (
     <div id="contact">
@@ -90,8 +89,8 @@ export default function Contact() {
 function Favorite({ contact }: { contact: ContactT }) {
   const fetcher = useFetcher();
   let favorite = contact.favorite;
-  if (fetcher.formData) {
-    favorite = fetcher.formData.get("favorite") === "true";
+  if (fetcher.submission?.formData) {
+    favorite = fetcher.submission.formData.get("favorite") === "true";
   }
   return (
     <fetcher.Form method="post">
