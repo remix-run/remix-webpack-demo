@@ -1,4 +1,10 @@
-import { Outlet } from "@remix-run/react";
+import { Links, Outlet } from "@remix-run/react";
+
+import styles from "~/index.css";
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
 
 export default function Root() {
   return (
@@ -18,6 +24,7 @@ export default function Root() {
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link rel="manifest" href="/manifest.json" />
         <title>My React App</title>
+        <Links/>
       </head>
       <body>
         <div id="root">
