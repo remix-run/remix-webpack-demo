@@ -1,41 +1,43 @@
-# Getting Started with Create React App
+# Remix Webpack Demo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repo was made by:
 
-## Available Scripts
+1. Creating a new project with [Create React App](https://create-react-app.dev/)
+2. 👉 Implementing the [React Router v6.4 tutorial](https://reactrouter.com/en/main/start/tutorial)
+3. 🚚 [Migrating to Remix](https://remix.run/docs/en/v1/guides/migrating-react-router-app)
+4. Replacing standard Remix dev tools with Webpack-based compiler found in `./scripts`
 
-In the project directory, you can run:
+Check out the commit history for all the gory details!
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```sh
+npm install
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Copy into `.env`:
 
-### `npm run build`
+```sh
+DATABASE_URL="file:./dev.db"
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Initialize the database:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```sh
+npx prisma db push
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Optional: then, seed the database for dev:
 
-### `npm run eject`
+```sh
+npx prisma db seed
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Webpack configuration
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Webpack configs for the browser and server builds can be found in:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- `./scripts/compiler-webpack/browser-config.ts`
+- `./scripts/compiler-webpack/server-config.ts`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Additional loaders and plugins can be added there to support any other features you want from Webpack!

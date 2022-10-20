@@ -16,7 +16,7 @@
   "scripts": {
     "build": "ts-node ./scripts/build.ts",
     "start": "remix-serve build",
-    "dev": "ts-node ./scripts/dev.ts"
+    "dev": "NODE_ENV=development ts-node ./scripts/dev.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
