@@ -1,41 +1,55 @@
-# Getting Started with Create React App
+# Remix Webpack Demo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is an example of using Webpack to build Remix.
 
-## Available Scripts
+To use this for your own Remix app, **check out the [migration guide](./docs/migration-guide.md)**. 👀
 
-In the project directory, you can run:
+---
 
-### `npm start`
+How this repo was made:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Create a new project with [Create React App](https://create-react-app.dev/)
+2. 👉 Implement the [React Router v6.4 tutorial](https://reactrouter.com/en/main/start/tutorial)
+3. 🚚 [Migrate to Remix](https://remix.run/docs/en/v1/guides/migrating-react-router-app)
+4. Replace standard Remix dev tools with Webpack-based compiler found in `./scripts`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The commit history includes 👉 and 🚚 emojis so you can follow along with which commits came from which step.
 
-### `npm run build`
+## Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1 Install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```sh
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2 `.env`
 
-### `npm run eject`
+Copy `.env.example` as `.env`:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```sh
+DATABASE_URL="file:./dev.db"
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 3 Initialize the database
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```sh
+npx prisma db push
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+If you want some data for development, seed the database:
 
-## Learn More
+```sh
+npx prisma db seed
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Configuration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Webpack configs can be found at:
+
+- [`./config.browser.ts`](./config.browser.ts)
+- [`./config.server.ts`](./config.server.ts)
+
+You can add loaders or plugins there to add support for any features you'd like from Webpack!
+
+For example, you could install [`postcss-loader`](https://webpack.js.org/loaders/postcss-loader/) and add it to both the browser and server configs to get [PostCSS](https://postcss.org/) features!
