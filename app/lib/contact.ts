@@ -36,7 +36,7 @@ export async function createContact() {
 
 export async function getContact(id: string) {
   await fakeNetwork(`contact:${id}`);
-  let contacts = store.getItem<Contact[]>("contacts")!;
+  let contacts = await getContacts();
   let contact = contacts.find((contact) => contact.id === id);
   return contact ?? null;
 }

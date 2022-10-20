@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 
 import { createContact, getContacts } from "~/lib/contact";
+import ErrorPage from "~/lib/error-page";
 import styles from "~/index.css";
 
 export function links() {
@@ -126,4 +127,8 @@ export default function Root() {
       </body>
     </html>
   );
+}
+
+export function ErrorBoundary({ error }: { error: Error & { statusText?: string } }) {
+  return <ErrorPage error={error}/>
 }
