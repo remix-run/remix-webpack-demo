@@ -17,7 +17,9 @@ import ErrorPage from "~/lib/error-page";
 import styles from "~/index.css";
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+  ];
 }
 
 export async function loader({ request }: LoaderArgs) {

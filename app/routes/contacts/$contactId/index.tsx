@@ -5,7 +5,10 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 
+import { link as cssLink, styles } from "~/contact.module.css"
 import { type Contact as ContactT, getContact, updateContact } from "~/lib/contact"
+
+export const links = () => [cssLink]
 
 export async function loader({ params }: LoaderArgs) {
   const contact = await getContact(params.contactId!);
@@ -36,7 +39,7 @@ export default function Contact() {
       </div>
 
       <div>
-        <h1>
+        <h1 className={styles.title}>
           {contact.first || contact.last ? (
             <>
               {contact.first} {contact.last}
