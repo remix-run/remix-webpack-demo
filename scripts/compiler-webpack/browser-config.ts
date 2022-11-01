@@ -57,10 +57,26 @@ export const createBrowserConfig = (
             loader: "tsx",
           },
         },
+
+        {
+          test: /\.module\.css$/i,
+          use: [
+            {
+              loader: require.resolve("./loaders/remix-css-loader.ts"),
+              options: { emit: true },
+            },
+            {
+              loader: "css-loader",
+              options: { modules: true },
+            },
+          ],
+        },
         {
           test: /\.css$/i,
           type: "asset/resource",
+          exclude: /\.module\.css$/i,
         },
+
         {
           test: /\.server\./,
           loader: require.resolve(
@@ -83,7 +99,8 @@ export const createBrowserConfig = (
       library: { type: "module" },
       chunkFormat: "module",
       chunkLoading: "import",
-      assetModuleFilename: "_assets/[name]-[contenthash][ext]",
+      assetModuleFilename: "_assets/[name]-[contenthash].[ext]",
+      cssChunkFilename: "_assets/[name]-[contenthash].[ext]",
       filename: "[name]-[contenthash].js",
       chunkFilename: "[name]-[contenthash].js",
     },

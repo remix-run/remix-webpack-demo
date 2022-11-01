@@ -49,6 +49,7 @@ export const createServerConfig = (
       path: path.dirname(remixConfig.serverBuildPath),
       publicPath: remixConfig.publicPath,
       assetModuleFilename: "_assets/[name]-[contenthash][ext]",
+      cssChunkFilename: "_assets/[name]-[contenthash].[ext]",
     },
     module: {
       rules: [
@@ -61,10 +62,24 @@ export const createServerConfig = (
             loader: "tsx",
           },
         },
-        // TODO disable CSS output manually
+
+        {
+          test: /\.module\.css$/i,
+          use: [
+            {
+              loader: require.resolve("./loaders/remix-css-loader.ts"),
+              options: { emit: false },
+            },
+            {
+              loader: "css-loader",
+              options: { modules: true },
+            },
+          ],
+        },
         {
           test: /\.css$/i,
           type: "asset/resource",
+          exclude: /\.module\.css$/i,
         },
       ],
     },
