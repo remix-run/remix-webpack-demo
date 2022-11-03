@@ -2,6 +2,7 @@ import { json, LoaderArgs, redirect } from "@remix-run/node";
 import {
   Form,
   Links,
+  LiveReload,
   NavLink,
   Outlet,
   Scripts,
@@ -124,6 +125,7 @@ export default function Root() {
           </div>
         </div>
         <Scripts/>
+        <LiveReload />
       </body>
     </html>
   );
