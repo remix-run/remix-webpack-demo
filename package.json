@@ -1,17 +1,16 @@
 {
   "private": true,
   "dependencies": {
+    "@prisma/client": "^4.5.0",
     "@remix-run/node": "^1.7.2",
     "@remix-run/react": "^1.7.2",
     "@remix-run/serve": "^1.7.2",
     "@types/node": "^16.11.66",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
-    "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
-    "sort-by": "^1.2.0",
     "typescript": "^4.8.4"
   },
   "scripts": {
@@ -19,10 +18,8 @@
     "start": "remix-serve build",
     "dev": "ts-node ./scripts/dev.ts"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "browserslist": {
     "production": [
@@ -42,10 +39,12 @@
     "@types/fs-extra": "^9.0.13",
     "@types/webpack-node-externals": "^2.5.3",
     "@types/ws": "^8.5.3",
+    "dotenv": "^16.0.3",
     "esbuild": "^0.15.12",
     "esbuild-loader": "^2.20.0",
     "express": "^4.18.2",
     "fs-extra": "^10.1.0",
+    "prisma": "^4.5.0",
     "ts-node": "^10.9.1",
     "webpack": "^5.74.0",
     "webpack-node-externals": "^3.0.0",

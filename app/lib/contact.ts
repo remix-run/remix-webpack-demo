@@ -1,69 +1,49 @@
-import { matchSorter } from "match-sorter";
-import sortBy from "sort-by";
+import { db } from "~/lib/db.server";
 
-import { store } from "~/lib/store";
+export type { Contact } from "@prisma/client";
 
-export type Contact = {
-  id: string;
-  createdAt: number;
-  first?: string;
-  last?: string;
-  favorite?: boolean;
-  avatar?: string;
-  twitter?: string;
-  notes?: string;
-};
+function matchCaseInsensitive(query: string, text?: string) {
+  return text && text.toLocaleLowerCase().includes(query);
+}
 
 export async function getContacts(query?: string) {
   await fakeNetwork(`getContacts:${query}`);
-  let contacts = store.getItem<Contact[]>("contacts");
-  if (!contacts) contacts = [];
-  if (query) {
-    contacts = matchSorter(contacts, query, { keys: ["first", "last"] });
-  }
-  return contacts.sort(sortBy("last", "createdAt"));
+  let contacts = await db.contact.findMany({
+    orderBy: [{ first: "asc" }, { last: "asc" }],
+  });
+  return query
+    ? contacts.filter(
+        (contact) =>
+          matchCaseInsensitive(query, contact.first ?? undefined) ||
+          matchCaseInsensitive(query, contact.last ?? undefined)
+      )
+    : contacts;
 }
 
 export async function createContact() {
   await fakeNetwork();
-  let id = Math.random().toString(36).substring(2, 9);
-  let contact = { id, createdAt: Date.now() };
-  let contacts = await getContacts();
-  contacts.unshift(contact);
-  await set(contacts);
+  let contact = await db.contact.create({ data: {} });
   return contact;
 }
 
 export async function getContact(id: string) {
   await fakeNetwork(`contact:${id}`);
-  let contacts = await getContacts();
-  let contact = contacts.find((contact) => contact.id === id);
-  return contact ?? null;
+  let contact = await db.contact.findUnique({ where: { id } });
+  return contact;
 }
 
-export async function updateContact(id: string, updates: Partial<Contact>) {
+export async function updateContact(
+  id: string,
+  updates: Parameters<typeof db.contact.update>[0]["data"]
+) {
   await fakeNetwork();
-  let contacts = store.getItem<Contact[]>("contacts")!;
-  let contact = contacts.find((contact) => contact.id === id);
-  if (!contact) throw new Error(`No contact found for ${id}`);
-  Object.assign(contact, updates);
-  await set(contacts);
+  let contact = await db.contact.update({ where: { id }, data: updates });
   return contact;
 }
 
 export async function deleteContact(id: string) {
-  let contacts = store.getItem<Contact[]>("contacts")!;
-  let index = contacts.findIndex((contact) => contact.id === id);
-  if (index > -1) {
-    contacts.splice(index, 1);
-    await set(contacts);
-    return true;
-  }
-  return false;
-}
-
-async function set(contacts: Contact[]) {
-  return store.setItem("contacts", contacts);
+  let contact = await db.contact.delete({ where: { id } });
+  return contact;
 }
 
 // fake a cache so we don't slow down stuff we've already seen
