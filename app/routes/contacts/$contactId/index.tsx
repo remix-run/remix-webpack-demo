@@ -1,11 +1,11 @@
-import { ActionArgs, LoaderArgs } from "@remix-run/node";
+import { ActionArgs, LoaderArgs, SerializeFrom } from "@remix-run/node";
 import {
   Form,
   useFetcher,
   useLoaderData,
 } from "@remix-run/react";
 
-import { Contact as ContactT, getContact, updateContact } from "~/lib/contact"
+import { type Contact as ContactT, getContact, updateContact } from "~/lib/contact"
 
 export async function loader({ params }: LoaderArgs) {
   const contact = await getContact(params.contactId!);
@@ -32,7 +32,7 @@ export default function Contact() {
     <div id="contact">
       <div>
         {/* eslint-disable-next-line jsx-a11y/alt-text */}
-        <img key={contact.avatar} src={contact.avatar} />
+        <img key={contact.avatar} src={contact.avatar ?? undefined} />
       </div>
 
       <div>
@@ -86,7 +86,7 @@ export default function Contact() {
   );
 }
 
-function Favorite({ contact }: { contact: ContactT }) {
+function Favorite({ contact }: { contact: SerializeFrom<ContactT> }) {
   const fetcher = useFetcher();
   let favorite = contact.favorite;
   if (fetcher.submission?.formData) {

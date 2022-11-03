@@ -25,3 +25,7 @@ yarn-error.log*
 # remix
 /.cache/
 /public/build/
+
+# prisma
+/prisma/dev.db
+.env
