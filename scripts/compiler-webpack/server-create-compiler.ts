@@ -6,7 +6,7 @@ import webpack from "webpack";
 import VirtualModulesPlugin from "webpack-virtual-modules";
 
 import { CreateCompiler, ServerCompiler } from "../compiler-kit";
-import { createServerConfig } from "./server-config";
+import { createServerConfig } from "../../config.server";
 
 const dynamicVirtualModule = (compiler: webpack.Compiler, vmodPath: string) => {
   const tapName = "Remix Webpack Compiler";

@@ -7,7 +7,7 @@ import webpack from "webpack";
 import * as obj from "../utils/object";
 import { BrowserCompiler, CreateCompiler } from "../compiler-kit";
 import { getExports } from "./get-exports";
-import { createBrowserConfig } from "./browser-config";
+import { createBrowserConfig } from "../../config.browser";
 
 function createUrl(publicPath: string, file: string): string {
   return (

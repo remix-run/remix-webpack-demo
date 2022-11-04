@@ -6,7 +6,7 @@ import type { RemixConfig } from "@remix-run/dev/dist/config";
 import webpack from "webpack";
 import VirtualModulesPlugin from "webpack-virtual-modules";
 
-import * as obj from "../utils/object";
+import * as obj from "./scripts/utils/object";
 
 const BROWSER_ROUTE_PREFIX = "__remix_browser_route__";
 const BROWSER_ROUTE_REGEX = new RegExp("/" + BROWSER_ROUTE_PREFIX);
