@@ -1,8 +1,8 @@
 # Remix Webpack Demo
 
-This is an example of using Webpack to build Remix.
+This is an example of using Webpack as the compiler for a Remix app. While not supported as a long-term solution, we offer this example as a migration path for your React Router / Webpack apps to Remix.
 
-To use this for your own Remix app, **check out the [migration guide](./docs/migration-guide.md)**. 👀
+To migrate your Webpack-based React Router app, **check out the [migration guide](./docs/migration-guide.md)**. 👀
 
 ---
 

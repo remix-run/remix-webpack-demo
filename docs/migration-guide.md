@@ -16,7 +16,7 @@ This is designed to be a stepping stone for users migrating from Webpack or [Cre
 
 The idea is that if you depend on Webpack features, you can use this approach to immediately get up and running with Remix.
 
-Then you can incrementally migrate your app to not depend on Webpack, ultimately ditching it in favor of the official Remix compiler.
+Then you can incrementally migrate your app to not depend on Webpack-isms and eventually use the Remix compiler.
 
 ## 1: Upgrade to React Router 6.4
 
