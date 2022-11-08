@@ -17,9 +17,7 @@ import ErrorPage from "~/lib/error-page";
 import styles from "~/index.css";
 
 export function links() {
-  return [
-    { rel: "stylesheet", href: styles },
-  ];
+  return [{ rel: "stylesheet", href: styles }];
 }
 
 export async function loader({ request }: LoaderArgs) {
@@ -41,9 +39,7 @@ export default function Root() {
 
   const searching =
     navigation.location &&
-    new URLSearchParams(navigation.location.search).has(
-      "q"
-    );
+    new URLSearchParams(navigation.location.search).has("q");
 
   useEffect(() => {
     (document.getElementById("q") as HTMLInputElement).value = q;
@@ -59,7 +55,7 @@ export default function Root() {
         <link rel="apple-touch-icon" href="/logo192.png" />
         <link rel="manifest" href="/manifest.json" />
         <title>My React App</title>
-        <Links/>
+        <Links />
       </head>
       <body>
         <div id="root">
@@ -97,7 +93,15 @@ export default function Root() {
                       <NavLink
                         to={`contacts/${contact.id}`}
                         className={({ isActive }) =>
-                          isActive ? "active" : navigation.state !== "idle" ? "pending" : ""
+                          isActive
+                            ? "active"
+                            : // `isPending` isn't in Remix yet, otherwise this would be easier
+                            navigation.state === "loading" &&
+                              navigation.location.pathname.endsWith(
+                                "/" + contact.id
+                              )
+                            ? "pending"
+                            : ""
                         }
                       >
                         {contact.first || contact.last ? (
@@ -126,13 +130,17 @@ export default function Root() {
             <Outlet />
           </div>
         </div>
-        <Scripts/>
+        <Scripts />
         <LiveReload />
       </body>
     </html>
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error & { statusText?: string } }) {
-  return <ErrorPage error={error}/>
+export function ErrorBoundary({
+  error,
+}: {
+  error: Error & { statusText?: string };
+}) {
+  return <ErrorPage error={error} />;
 }

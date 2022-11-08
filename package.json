@@ -53,5 +53,6 @@
     "webpack-node-externals": "^3.0.0",
     "webpack-virtual-modules": "^0.4.5",
     "ws": "^8.9.0"
-  }
+  },
+  "prettier": {}
 }
