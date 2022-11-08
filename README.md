@@ -43,6 +43,17 @@ If you want some data for development, seed the database:
 npx prisma db seed
 ```
 
+### 4 Run the app
+
+```sh
+# development
+npm run dev
+
+# production build
+npm run build
+npm start
+```
+
 ## Configuration
 
 Webpack configs can be found at:
