@@ -1,4 +1,8 @@
-export default function ErrorPage({ error }: { error: { message?: string, statusText ?: string }}) {
+export default function ErrorPage({
+  error,
+}: {
+  error: { message?: string; statusText?: string };
+}) {
   console.error(error);
 
   return (
