@@ -27,5 +27,5 @@ yarn-error.log*
 /public/build/
 
 # prisma
-/prisma/data.db
+/prisma/*.db
 .env
