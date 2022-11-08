@@ -1,9 +1,5 @@
 import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node";
-import {
-  Form,
-  useLoaderData,
-  useNavigate,
-} from "@remix-run/react";
+import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 
 import { getContact, updateContact } from "~/lib/contact";
 

@@ -1,14 +1,14 @@
 import { ActionArgs, LoaderArgs, SerializeFrom } from "@remix-run/node";
+import { Form, useFetcher, useLoaderData } from "@remix-run/react";
+
+import { link as cssLink, styles } from "~/contact.module.css";
 import {
-  Form,
-  useFetcher,
-  useLoaderData,
-} from "@remix-run/react";
+  type Contact as ContactT,
+  getContact,
+  updateContact,
+} from "~/lib/contact";
 
-import { link as cssLink, styles } from "~/contact.module.css"
-import { type Contact as ContactT, getContact, updateContact } from "~/lib/contact"
-
-export const links = () => [cssLink]
+export const links = () => [cssLink];
 
 export async function loader({ params }: LoaderArgs) {
   const contact = await getContact(params.contactId!);
@@ -54,7 +54,8 @@ export default function Contact() {
           <p>
             <a
               target="_blank"
-              href={`https://twitter.com/${contact.twitter}`} rel="noreferrer"
+              href={`https://twitter.com/${contact.twitter}`}
+              rel="noreferrer"
             >
               {contact.twitter}
             </a>
@@ -73,9 +74,7 @@ export default function Contact() {
             onSubmit={(event) => {
               if (
                 // eslint-disable-next-line no-restricted-globals
-                !confirm(
-                  "Please confirm you want to delete this record."
-                )
+                !confirm("Please confirm you want to delete this record.")
               ) {
                 event.preventDefault();
               }
@@ -100,11 +99,7 @@ function Favorite({ contact }: { contact: SerializeFrom<ContactT> }) {
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
-        aria-label={
-          favorite
-            ? "Remove from favorites"
-            : "Add to favorites"
-        }
+        aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
       >
         {favorite ? "★" : "☆"}
       </button>
