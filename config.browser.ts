@@ -62,7 +62,9 @@ export const createBrowserConfig = (
           test: /\.module\.css$/i,
           use: [
             {
-              loader: require.resolve("./loaders/remix-css-loader.ts"),
+              loader: require.resolve(
+                "./scripts/compiler-webpack/loaders/remix-css-loader.ts"
+              ),
               options: { emit: true },
             },
             {
@@ -80,13 +82,19 @@ export const createBrowserConfig = (
         {
           test: /\.server\./,
           loader: require.resolve(
-            path.join(__dirname, "./loaders/empty-module-loader.ts")
+            path.join(
+              __dirname,
+              "./scripts/compiler-webpack/loaders/empty-module-loader.ts"
+            )
           ),
         },
         {
           test: BROWSER_ROUTE_REGEX,
           loader: require.resolve(
-            path.join(__dirname, "./loaders/browser-route-loader.ts")
+            path.join(
+              __dirname,
+              "./scripts/compiler-webpack/loaders/browser-route-loader.ts"
+            )
           ),
           options: { remixConfig, browserRouteRegex: BROWSER_ROUTE_REGEX },
         },
@@ -99,8 +107,8 @@ export const createBrowserConfig = (
       library: { type: "module" },
       chunkFormat: "module",
       chunkLoading: "import",
-      assetModuleFilename: "_assets/[name]-[contenthash].[ext]",
-      cssChunkFilename: "_assets/[name]-[contenthash].[ext]",
+      assetModuleFilename: "_assets/[name]-[contenthash][ext]",
+      cssChunkFilename: "_assets/[name]-[contenthash][ext]",
       filename: "[name]-[contenthash].js",
       chunkFilename: "[name]-[contenthash].js",
     },

@@ -18,7 +18,7 @@ const getCssChunkFilename = <T>(loaderContext: webpack.LoaderContext<T>) => {
     ? cssChunkFilename
     : typeof assetModuleFilename === "string"
     ? assetModuleFilename
-    : "_assets/[name]-[contenthash].[ext]";
+    : "_assets/[name]-[contenthash][ext]";
 };
 
 export async function pitch(

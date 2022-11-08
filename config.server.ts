@@ -49,7 +49,7 @@ export const createServerConfig = (
       path: path.dirname(remixConfig.serverBuildPath),
       publicPath: remixConfig.publicPath,
       assetModuleFilename: "_assets/[name]-[contenthash][ext]",
-      cssChunkFilename: "_assets/[name]-[contenthash].[ext]",
+      cssChunkFilename: "_assets/[name]-[contenthash][ext]",
     },
     module: {
       rules: [
@@ -67,7 +67,9 @@ export const createServerConfig = (
           test: /\.module\.css$/i,
           use: [
             {
-              loader: require.resolve("./loaders/remix-css-loader.ts"),
+              loader: require.resolve(
+                "./scripts/compiler-webpack/loaders/remix-css-loader.ts"
+              ),
               options: { emit: false },
             },
             {
