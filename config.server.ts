@@ -91,6 +91,7 @@ export const createServerConfig = (
       }),
       new webpack.EnvironmentPlugin({
         REMIX_DEV_SERVER_WS_PORT: JSON.stringify(remixConfig.devServerPort),
+        NODE_ENV: JSON.stringify(mode),
       }),
       new webpack.ProvidePlugin({ React: ["react"] }),
     ],
