@@ -65,7 +65,7 @@ Copy `build`, `start`, and `dev` scripts to your `package.json`
 
 ## 5: Browser and server configs
 
-Copy [`config.browser.ts`](../config.browser.ts) and [`config.browser.ts`](../config.server.ts) into the root of your Remix project.
+Copy [`config.browser.ts`](../config.browser.ts) and [`config.server.ts`](../config.server.ts) into the root of your Remix project.
 
 NOTE: you may need add these files to your `tsconfig.json` if Typescript complains:
 
