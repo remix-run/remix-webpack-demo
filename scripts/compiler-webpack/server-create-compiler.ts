@@ -92,5 +92,7 @@ const serverBuild = (config: RemixConfig, manifest: AssetsManifest): string => {
     ${routes.join(",\n  ")}
   };
   export const assets = ${JSON.stringify(manifest)};
+  export const future = ${JSON.stringify(config.future)};
+  export const publicPath = ${JSON.stringify(config.publicPath)};
 `;
 };
