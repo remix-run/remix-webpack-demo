@@ -30,6 +30,7 @@ export const createBrowserConfig = (
 ): webpack.Configuration => {
   const browserRoutes = getBrowserRoutes(remixConfig);
   return {
+    mode,
     devtool: mode === "development" ? "inline-cheap-source-map" : undefined,
     target: "web",
     resolve: {
