@@ -15,6 +15,7 @@ export const createServerConfig = (
 
   const isModule = remixConfig.serverModuleFormat === "esm";
   return {
+    mode,
     devtool: mode === "development" ? "inline-cheap-source-map" : undefined,
     context: remixConfig.rootDirectory,
     target: "node",
